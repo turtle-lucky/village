@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐢 육지거북이 마을의 경제 탐험대</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Jua & Gowun Dodum -->
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            turtle: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              dark: '#14532d',
+            },
+            sand: {
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+            }
+          },
+          fontFamily: {
+            jua: ['Jua', 'sans-serif'],
+            gowun: ['Gowun Dodum', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Gowun Dodum', sans-serif;
+      background-color: #f4fbf7;
+      background-image: radial-gradient(#dcfce7 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+    .font-jua {
+      font-family: 'Jua', sans-serif;
+    }
+    .turtle-bounce {
+      animation: bounce 2s infinite ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .card-shadow {
+      box-shadow: 0 10px 25px -5px rgba(22, 101, 52, 0.1), 0 8px 10px -6px rgba(22, 101, 52, 0.05);
+    }
+    .btn-push {
+      transition: all 0.15s ease;
+    }
+    .btn-push:active {
+      transform: translateY(4px);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between p-4 sm:p-6">
+
+  <!-- Main Container -->
+  <div class="max-w-3xl mx-auto w-full flex-grow flex flex-col justify-center">
+
+    <!-- Header / Navbar -->
+    <header class="flex justify-between items-center bg-white/90 backdrop-blur-md px-6 py-4 rounded-3xl border-2 border-turtle-200 mb-6 card-shadow">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="showScreen('screen-main')">
+        <span class="text-3xl turtle-bounce">🐢</span>
+        <div>
+          <h1 class="font-jua text-2xl text-turtle-800 leading-none">육지거북이 마을</h1>
+          <p class="text-xs text-turtle-600 font-bold mt-1">6학년 사회 : 가계와 기업의 경제 활동</p>
+        </div>
+      </div>
+      <button onclick="showScreen('screen-main')" class="bg-turtle-100 hover:bg-turtle-200 text-turtle-800 font-jua px-4 py-2 rounded-2xl border border-turtle-300 transition text-sm flex items-center gap-1.5">
+        <i class="fa-solid fa-house"></i> 메인으로
+      </button>
+    </header>
+
+    <!-- MAIN SCREEN -->
+    <section id="screen-main" class="bg-white rounded-3xl p-6 sm:p-8 border-4 border-turtle-200 card-shadow text-center">
+      <div class="inline-block bg-sand-100 text-amber-900 font-jua px-4 py-1.5 rounded-full text-sm mb-4 border border-sand-300">
+        🌿 6학년 2학기 사회 1단원 🌿
+      </div>
+      <h2 class="font-jua text-3xl sm:text-4xl text-turtle-800 mb-3">
+        엉금엉금~ 경제 탐험대에 오신 것을 환영해요!
+      </h2>
+      <p class="text-slate-600 text-base mb-8 max-w-lg mx-auto leading-relaxed">
+        우리 생활 속에서 **가계**와 **기업**이 어떻게 서로 돕고 경제 활동을 하는지 거북이와 함께 신나게 배워봐요! 🐢✨
+      </p>
+
+      <!-- Mode Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <!-- Mode 1 -->
+        <div onclick="startQuiz()" class="bg-gradient-to-b from-turtle-50 to-turtle-100 p-5 rounded-2xl border-2 border-turtle-300 hover:border-turtle-500 cursor-pointer transition transform hover:-translate-y-1 text-left flex flex-col justify-between group btn-push">
+          <div>
+            <div class="w-12 h-12 bg-turtle-500 text-white rounded-2xl flex items-center justify-center font-jua text-xl mb-3 group-hover:scale-110 transition">
+              🧩
+            </div>
+            <h3 class="font-jua text-xl text-turtle-900 mb-1">개념 퀴즈 퀘스트</h3>
+            <p class="text-xs text-slate-600 leading-normal">가계, 기업, 세금 등 핵심 경제 개념 퀴즈 5문항 도전!</p>
+          </div>
+          <span class="mt-4 text-xs font-bold text-turtle-700 flex items-center gap-1">
+            탐험 시작하기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </span>
+        </div>
+
+        <!-- Mode 2 -->
+        <div onclick="startRoleGame()" class="bg-gradient-to-b from-amber-50 to-sand-100 p-5 rounded-2xl border-2 border-amber-300 hover:border-amber-500 cursor-pointer transition transform hover:-translate-y-1 text-left flex flex-col justify-between group btn-push">
+          <div>
+            <div class="w-12 h-12 bg-amber-400 text-amber-950 rounded-2xl flex items-center justify-center font-jua text-xl mb-3 group-hover:scale-110 transition">
+              ⚖️
+            </div>
+            <h3 class="font-jua text-xl text-amber-950 mb-1">가계 vs 기업 분류</h3>
+            <p class="text-xs text-slate-600 leading-normal">다양한 경제 활동 카드를 알맞은 상자에 쏙쏙 넣어요!</p>
+          </div>
+          <span class="mt-4 text-xs font-bold text-amber-800 flex items-center gap-1">
+            카드 게임하기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </span>
+        </div>
+
+        <!-- Mode 3 -->
+        <div onclick="startMarketSim()" class="bg-gradient-to-b from-emerald-50 to-teal-100 p-5 rounded-2xl border-2 border-teal-300 hover:border-teal-500 cursor-pointer transition transform hover:-translate-y-1 text-left flex flex-col justify-between group btn-push">
+          <div>
+            <div class="w-12 h-12 bg-teal-500 text-white rounded-2xl flex items-center justify-center font-jua text-xl mb-3 group-hover:scale-110 transition">
+              🛒
+            </div>
+            <h3 class="font-jua text-xl text-teal-950 mb-1">알뜰 시장 체험</h3>
+            <p class="text-xs text-slate-600 leading-normal">제한된 용돈으로 필요한 것과 원하는 것을 지혜롭게 선택해요!</p>
+          </div>
+          <span class="mt-4 text-xs font-bold text-teal-800 flex items-center gap-1">
+            장보기 시작 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Badge Storage Preview -->
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-left">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🏅</span>
+          <div>
+            <h4 class="font-jua text-slate-800 text-sm">나의 스마트 거북이 배지</h4>
+            <p class="text-xs text-slate-500">모드를 완료하여 배지를 모아보세요!</p>
+          </div>
+        </div>
+        <div id="badge-container" class="flex gap-2">
+          <!-- Badges dynamically rendered -->
+        </div>
+      </div>
+    </section>
+
+    <!-- MODE 1: QUIZ SCREEN -->
+    <section id="screen-quiz" class="hidden bg-white rounded-3xl p-6 sm:p-8 border-4 border-turtle-200 card-shadow">
+      <!-- Progress Bar -->
+      <div class="flex items-center justify-between mb-4">
+        <span class="font-jua text-turtle-700 text-lg">퀘스트 <span id="quiz-num">1</span> / 5</span>
+        <div class="w-48 bg-slate-100 h-3 rounded-full overflow-hidden border border-slate-200">
+          <div id="quiz-progress" class="bg-turtle-500 h-full w-1/5 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="bg-turtle-50 border-2 border-turtle-200 rounded-2xl p-6 mb-6">
+        <h3 id="quiz-question" class="font-jua text-xl sm:text-2xl text-slate-800 mb-2">
+          질문 텍스트가 들어갑니다.
+        </h3>
+        <p class="text-xs text-turtle-700 font-bold">💡 알맞은 정답을 선택해 주세요!</p>
+      </div>
+
+      <!-- Options -->
+      <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+        <!-- Options generated dynamically -->
+      </div>
+
+      <!-- Feedback Card (Hidden initially) -->
+      <div id="quiz-feedback" class="hidden rounded-2xl p-5 mb-6 border-2">
+        <div class="flex items-start gap-4">
+          <span id="quiz-feedback-icon" class="text-4xl">🐢</span>
+          <div>
+            <h4 id="quiz-feedback-title" class="font-jua text-lg mb-1"></h4>
+            <p id="quiz-explanation" class="text-sm leading-relaxed text-slate-700"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Button -->
+      <div class="flex justify-end">
+        <button id="btn-next-quiz" onclick="nextQuiz()" class="hidden bg-turtle-600 hover:bg-turtle-700 text-white font-jua px-6 py-3 rounded-2xl text-lg transition btn-push flex items-center gap-2">
+          다음 퀘스트로 <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- MODE 2: ROLE CLASSIFICATION SCREEN -->
+    <section id="screen-role" class="hidden bg-white rounded-3xl p-6 sm:p-8 border-4 border-amber-200 card-shadow">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h2 class="font-jua text-2xl text-amber-900">⚖️ 가계 vs 기업 역할 맞추기</h2>
+          <p class="text-xs text-slate-600">제시된 경제 활동 카드가 누구의 역할인지 버튼을 눌러 선택해 주세요!</p>
+        </div>
+        <div class="bg-amber-100 text-amber-900 font-jua px-3 py-1 rounded-full text-sm">
+          남은 카드: <span id="role-remaining">5</span>개
+        </div>
+      </div>
+
+      <!-- Active Card Area -->
+      <div class="my-6 min-h-[160px] flex items-center justify-center">
+        <div id="role-card" class="bg-gradient-to-br from-amber-50 to-sand-100 border-4 border-amber-300 rounded-3xl p-6 sm:p-8 text-center max-w-md w-full card-shadow transition transform hover:scale-105">
+          <span class="text-xs bg-amber-200 text-amber-900 font-bold px-3 py-1 rounded-full">경제 활동 카드</span>
+          <h3 id="role-card-text" class="font-jua text-xl sm:text-2xl text-slate-800 my-4">
+            카드 내용이 들어갑니다.
+          </h3>
+          <p class="text-xs text-slate-500">아래의 [가계] 또는 [기업] 상자를 선택해 주세요!</p>
+        </div>
+      </div>
+
+      <!-- Target Choice Buttons -->
+      <div class="grid grid-cols-2 gap-4">
+        <button onclick="checkRoleChoice('가계')" class="bg-gradient-to-b from-turtle-100 to-turtle-200 border-3 border-turtle-400 hover:border-turtle-600 p-5 rounded-2xl font-jua text-turtle-900 text-xl flex flex-col items-center gap-2 transition btn-push">
+          <span class="text-4xl">🏠</span>
+          <span>가계의 역할</span>
+          <span class="text-xs font-normal text-turtle-700">(소비자, 노동 제공자)</span>
+        </button>
+
+        <button onclick="checkRoleChoice('기업')" class="bg-gradient-to-b from-sky-100 to-sky-200 border-3 border-sky-400 hover:border-sky-600 p-5 rounded-2xl font-jua text-sky-900 text-xl flex flex-col items-center gap-2 transition btn-push">
+          <span class="text-4xl">🏢</span>
+          <span>기업의 역할</span>
+          <span class="text-xs font-normal text-sky-700">(생산자, 일자리 제공자)</span>
+        </button>
+      </div>
+
+      <!-- Feedback Area -->
+      <div id="role-feedback" class="mt-4 p-4 rounded-2xl hidden text-center font-jua text-base"></div>
+    </section>
+
+    <!-- MODE 3: MARKET SIMULATION SCREEN -->
+    <section id="screen-market" class="hidden bg-white rounded-3xl p-6 sm:p-8 border-4 border-teal-200 card-shadow">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 border-b pb-4">
+        <div>
+          <h2 class="font-jua text-2xl text-teal-900">🛒 거북이의 알뜰 시장</h2>
+          <p class="text-xs text-slate-600">준비된 10,000원의 예산으로 합리적인 소비를 선택해보세요!</p>
+        </div>
+        <div class="bg-teal-50 border-2 border-teal-300 rounded-2xl px-4 py-2 flex items-center gap-2">
+          <span class="text-xl">💰</span>
+          <div>
+            <div class="text-[10px] text-teal-700 font-bold">남은 예산</div>
+            <div class="font-jua text-lg text-teal-950" id="market-budget">10,000 원</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-sm font-bold text-teal-800 mb-3">🛍️ 사고 싶은 물건을 골라 장바구니에 담아보세요! (최대 예산 10,000원)</p>
+
+      <!-- Items Grid -->
+      <div id="market-items-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        <!-- Generated Dynamically -->
+      </div>
+
+      <!-- Selected Basket & Submit -->
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="text-xs text-slate-500 font-bold">장바구니 상태</span>
+          <div class="font-jua text-slate-800 text-sm" id="basket-summary">아직 담은 물건이 없어요.</div>
+        </div>
+        <button onclick="evaluateMarket()" class="bg-teal-600 hover:bg-teal-700 text-white font-jua px-6 py-3 rounded-xl transition btn-push w-full sm:w-auto text-base">
+          구매 완료 및 결과 보기 ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- RESULT / REWARD SCREEN -->
+    <section id="screen-result" class="hidden bg-white rounded-3xl p-8 border-4 border-turtle-300 card-shadow text-center">
+      <div class="text-6xl mb-4 turtle-bounce" id="result-emoji">🎉</div>
+      <h2 id="result-title" class="font-jua text-3xl text-turtle-900 mb-2">참 잘했어요!</h2>
+      <p id="result-subtitle" class="text-slate-600 text-sm mb-6">멋지게 탐험을 마쳤습니다.</p>
+
+      <!-- Score / Badge Highlight Card -->
+      <div class="bg-gradient-to-br from-turtle-50 to-sand-100 border-2 border-turtle-200 rounded-2xl p-6 mb-6 max-w-md mx-auto">
+        <div id="result-badge-box" class="mb-3">
+          <!-- Badge graphics -->
+        </div>
+        <p id="result-detail" class="text-sm text-slate-700 leading-relaxed font-gowun"></p>
+      </div>
+
+      <div class="flex justify-center gap-3">
+        <button onclick="showScreen('screen-main')" class="bg-turtle-600 hover:bg-turtle-700 text-white font-jua px-6 py-3 rounded-2xl text-lg transition btn-push">
+          메인 화면으로 이동 🐢
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-turtle-700 mt-6 font-bold">
+    🐢 초등학교 6학년 2학기 사회 - 가계와 기업의 경제 활동 학습 웹앱
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // State Management
+    const state = {
+      badges: {
+        quiz: false,
+        role: false,
+        market: false
+      },
+      quizIndex: 0,
+      quizScore: 0,
+      roleRemaining: [],
+      currentRoleCard: null,
+      marketBudget: 10000,
+      marketSelected: []
+    };
+
+    // 1. QUIZ DATA (6th Grade Social Studies Curriculum Aligned)
+    const quizData = [
+      {
+        question: "가정 살림을 같이 하는 생활 공동체로서, 노동을 제공하고 필요한 물건을 사서 소비하는 주체는 무엇일까요?",
+        options: ["가계", "기업", "정부", "은행"],
+        answer: 0,
+        explanation: "**가계**는 기업에 노동을 제공하여 소득(월급)을 얻고, 그 소득으로 생활에 필요한 재화나 서비스를 소비하는 경제 주체예요!"
+      },
+      {
+        question: "사람들에게 일자리를 제공하고, 생활에 필요한 물건이나 서비스를 만들어 판매하는 경제 주체는 무엇일까요?",
+        options: ["가계", "기업", "소비자", "시민단체"],
+        answer: 1,
+        explanation: "**기업**은 생산 활동을 통해 이윤을 추구하며, 가계 주민들에게 일자리를 제공하고 월급을 지급하는 역할을 합니다."
+      },
+      {
+        question: "다음 중 '가계'의 경제 활동으로 보기 어려우며, '기업'이 하는 일은 무엇일까요?",
+        options: [
+          "마트에서 학용품 사기",
+          "회사에 출근하여 일하기",
+          "새로운 스마트폰을 생산하여 판매하기",
+          "주말에 가족과 영화 관람하기"
+        ],
+        answer: 2,
+        explanation: "새로운 물건을 '생산하여 판매'하는 것은 기업의 핵심 역할이에요. 나머지 항목은 가계의 소비 및 노동 활동입니다."
+      },
+      {
+        question: "가계와 기업이 국가에 납부하는 돈으로, 도로나 공원 건설 등 국민 전체를 위한 일에 쓰이는 것은 무엇일까요?",
+        options: ["월급", "세금", "기부금", "수수료"],
+        answer: 1,
+        explanation: "가계와 기업은 소득과 이윤에 따라 **세금**을 내고, 정부는 이 세금으로 학교, 공원, 경찰서 등 공공시설을 운영해요."
+      },
+      {
+        question: "다음 중 한정된 용돈으로 물건을 살 때 가장 '합리적인 소비' 자세는 무엇일까요?",
+        options: [
+          "친구들이 사는 건 무조건 따라서 산다.",
+          "필요한 것과 원하는 것을 구분하여 우선순위를 정해 구입한다.",
+          "돈이 생기면 사고 싶은 것을 바로 다 산다.",
+          "가장 비싼 물건만 고른다."
+        ],
+        answer: 1,
+        explanation: "한정된 자원(돈)으로 최대의 만족을 얻으려면 **필요한 것(Need)**과 **유행/욕구(Want)**를 잘 구분해서 선택해야 합니다!"
+      }
+    ];
+
+    // 2. ROLE GAME DATA
+    const roleData = [
+      { text: "💼 회사에 출근해서 열심히 일하기", type: "가계" },
+      { text: "📱 새로운 디자인의 학용품 만들어 판매하기", type: "기업" },
+      { text: "🛒 주말에 마트에서 학학용품과 음식 사기", type: "가계" },
+      { text: "📢 신입 사원을 채용한다는 공고 내기", type: "기업" },
+      { text: "💰 한 달 동안 일한 직원들에게 월급 주기", type: "기업" },
+      { text: "🏦 번 돈의 일부를 은행에 저축하기", type: "가계" },
+      { text: "🏫 더 좋은 공장을 만들기 위해 연구원 고용하기", type: "기업" }
+    ];
+
+    // 3. MARKET SIMULATION DATA
+    const marketItems = [
+      { id: 1, name: "✏️ 6학년 공책 & 펜 세트", price: 3000, type: "need", desc: "공부에 꼭 필요한 도구!" },
+      { id: 2, name: "🍱 영양 가득 점심 샌드위치", price: 4000, type: "need", desc: "건강한 생활을 위한 식사" },
+      { id: 3, name: "🎮 미니 장난감 게임기", price: 5000, type: "want", desc: "갖고 싶지만 꼭 필요하진 않음" },
+      { id: 4, name: "👟 체육시간용 운동화 끈", price: 2000, type: "need", desc: "끊어진 신발끈 교체용" },
+      { id: 5, name: "🍫 반짝이 스티커 & 고급 초콜릿", price: 3500, type: "want", desc: "기분전환용 군것질거리" },
+      { id: 6, name: "🥤 달콤한 탄산음료", price: 1500, type: "want", desc: "맛있지만 건강엔 쏘쏘" }
+    ];
+
+    // Navigation Helper
+    function showScreen(screenId) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(screenId).classList.remove('hidden');
+      renderBadges();
+    }
+
+    // Render Badges in Main Screen
+    function renderBadges() {
+      const container = document.getElementById('badge-container');
+      container.innerHTML = `
+        <span class="px-2.5 py-1 rounded-xl text-xs font-jua border ${state.badges.quiz ? 'bg-turtle-100 text-turtle-800 border-turtle-400' : 'bg-slate-200 text-slate-400 border-slate-300'}">
+          🧩 퀴즈 마스터 ${state.badges.quiz ? '✓' : ''}
+        </span>
+        <span class="px-2.5 py-1 rounded-xl text-xs font-jua border ${state.badges.role ? 'bg-amber-100 text-amber-900 border-amber-400' : 'bg-slate-200 text-slate-400 border-slate-300'}">
+          ⚖️ 역할 분류 왕 ${state.badges.role ? '✓' : ''}
+        </span>
+        <span class="px-2.5 py-1 rounded-xl text-xs font-jua border ${state.badges.market ? 'bg-teal-100 text-teal-900 border-teal-400' : 'bg-slate-200 text-slate-400 border-slate-300'}">
+          🛒 알뜰 소비왕 ${state.badges.market ? '✓' : ''}
+        </span>
+      `;
+    }
+
+    // -------------------------------------------------------------
+    // MODE 1: QUIZ LOGIC
+    // -------------------------------------------------------------
+    function startQuiz() {
+      state.quizIndex = 0;
+      state.quizScore = 0;
+      showScreen('screen-quiz');
+      loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+      const q = quizData[state.quizIndex];
+      document.getElementById('quiz-num').innerText = state.quizIndex + 1;
+      document.getElementById('quiz-progress').style.width = `${((state.quizIndex + 1) / 5) * 100}%`;
+      document.getElementById('quiz-question').innerText = q.question;
+
+      // Reset UI
+      document.getElementById('quiz-feedback').classList.add('hidden');
+      document.getElementById('btn-next-quiz').classList.add('hidden');
+
+      const optionsBox = document.getElementById('quiz-options');
+      optionsBox.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `p-4 rounded-2xl border-2 border-slate-200 hover:border-turtle-400 bg-white text-left font-gowun font-bold text-slate-800 transition btn-push hover:bg-turtle-50`;
+        btn.innerHTML = `<span class="inline-block w-7 h-7 bg-turtle-100 text-turtle-800 rounded-full text-center font-jua text-sm leading-7 mr-2">${idx + 1}</span> ${opt}`;
+        btn.onclick = () => selectQuizAnswer(idx);
+        optionsBox.appendChild(btn);
+      });
+    }
+
+    function selectQuizAnswer(selectedIndex) {
+      const q = quizData[state.quizIndex];
+      const isCorrect = selectedIndex === q.answer;
+      
+      if (isCorrect) state.quizScore += 20;
+
+      // Lock buttons
+      const buttons = document.querySelectorAll('#quiz-options button');
+      buttons.forEach((b, idx) => {
+        b.disabled = true;
+        if (idx === q.answer) {
+          b.className = 'p-4 rounded-2xl border-2 border-turtle-500 bg-turtle-100 text-turtle-900 font-bold text-left';
+        } else if (idx === selectedIndex && !isCorrect) {
+          b.className = 'p-4 rounded-2xl border-2 border-rose-400 bg-rose-50 text-rose-900 font-bold text-left';
+        }
+      });
+
+      // Show Feedback
+      const feedback = document.getElementById('quiz-feedback');
+      const title = document.getElementById('quiz-feedback-title');
+      const exp = document.getElementById('quiz-explanation');
+      const icon = document.getElementById('quiz-feedback-icon');
+
+      feedback.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+      
+      if (isCorrect) {
+        feedback.classList.add('bg-emerald-50', 'border-emerald-300');
+        icon.innerText = '🐢✨';
+        title.innerText = '정답이에요! 참 잘했어요!';
+        title.className = 'font-jua text-lg text-emerald-800 mb-1';
+      } else {
+        feedback.classList.add('bg-rose-50', 'border-rose-300');
+        icon.innerText = '🐢💦';
+        title.innerText = '아쉬워요! 해설을 확인해봐요.';
+        title.className = 'font-jua text-lg text-rose-800 mb-1';
+      }
+
+      exp.innerHTML = q.explanation.replace(/\*\*(.*?)\*\*/g, '<strong class="text-turtle-800">$1</strong>');
+      document.getElementById('btn-next-quiz').classList.remove('hidden');
+    }
+
+    function nextQuiz() {
+      state.quizIndex++;
+      if (state.quizIndex < quizData.length) {
+        loadQuizQuestion();
+      } else {
+        // Quiz Complete
+        state.badges.quiz = true;
+        showResultScreen({
+          title: "퀴즈 퀘스트 완료!",
+          emoji: "🏆",
+          detail: `총 5문항 중 **${state.quizScore}점**을 취득하셨습니다!<br>가계와 기업의 개념을 멋지게 이해하셨네요!`,
+          badgeName: "🧩 퀴즈 마스터 배지"
+        });
+      }
+    }
+
+    // -------------------------------------------------------------
+    // MODE 2: ROLE GAME LOGIC
+    // -------------------------------------------------------------
+    function startRoleGame() {
+      state.roleRemaining = [...roleData].sort(() => Math.random() - 0.5);
+      showScreen('screen-role');
+      loadRoleCard();
+    }
+
+    function loadRoleCard() {
+      const feedback = document.getElementById('role-feedback');
+      feedback.classList.add('hidden');
+
+      document.getElementById('role-remaining').innerText = state.roleRemaining.length;
+
+      if (state.roleRemaining.length === 0) {
+        // Complete
+        state.badges.role = true;
+        showResultScreen({
+          title: "역할 맞추기 성공!",
+          emoji: "⚖️",
+          detail: "가계(소비자, 노동자)와 기업(생산자, 고용주)의 경제적 역할을 완벽하게 구분하셨습니다!",
+          badgeName: "⚖️ 역할 분류 왕 배지"
+        });
+        return;
+      }
+
+      state.currentRoleCard = state.roleRemaining.pop();
+      document.getElementById('role-card-text').innerText = state.currentRoleCard.text;
+    }
+
+    function checkRoleChoice(choice) {
+      const feedback = document.getElementById('role-feedback');
+      feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-rose-100', 'text-rose-900');
+
+      if (choice === state.currentRoleCard.type) {
+        feedback.classList.add('bg-emerald-100', 'text-emerald-900');
+        feedback.innerHTML = `⭕ 딩동댕! <strong>'${state.currentRoleCard.text}'</strong>은(는) <strong>${choice}</strong>의 역할이 맞아요!`;
+        setTimeout(() => {
+          loadRoleCard();
+        }, 1200);
+      } else {
+        feedback.classList.add('bg-rose-100', 'text-rose-900');
+        feedback.innerHTML = `❌ 다시 생각해봐요! 이 활동은 <strong>${state.currentRoleCard.type}</strong>의 역할이에요.`;
+        // Push back to try again later
+        state.roleRemaining.unshift(state.currentRoleCard);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // MODE 3: MARKET SIMULATION LOGIC
+    // -------------------------------------------------------------
+    function startMarketSim() {
+      state.marketBudget = 10000;
+      state.marketSelected = [];
+      showScreen('screen-market');
+      renderMarketItems();
+      updateMarketUI();
+    }
+
+    function renderMarketItems() {
+      const grid = document.getElementById('market-items-grid');
+      grid.innerHTML = '';
+
+      marketItems.forEach(item => {
+        const isSelected = state.marketSelected.includes(item.id);
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl border-2 transition cursor-pointer flex flex-col justify-between ${
+          isSelected ? 'bg-teal-50 border-teal-500 ring-2 ring-teal-300' : 'bg-white border-slate-200 hover:border-teal-300'
+        }`;
+        card.onclick = () => toggleMarketItem(item.id);
+
+        card.innerHTML = `
+          <div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${item.type === 'need' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+              ${item.type === 'need' ? '꼭 필요' : '갖고 싶음'}
+            </span>
+            <h4 class="font-jua text-base text-slate-800 mt-2">${item.name}</h4>
+            <p class="text-[11px] text-slate-500 my-1">${item.desc}</p>
+          </div>
+          <div class="flex justify-between items-center mt-3 pt-2 border-t border-slate-100">
+            <span class="font-jua text-teal-800 text-sm">${item.price.toLocaleString()}원</span>
+            <span class="text-xs font-bold ${isSelected ? 'text-teal-600' : 'text-slate-400'}">
+              ${isSelected ? '✓ 담김' : '+ 담기'}
+            </span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleMarketItem(id) {
+      const item = marketItems.find(i => i.id === id);
+      const index = state.marketSelected.indexOf(id);
+
+      if (index > -1) {
+        state.marketSelected.splice(index, 1);
+      } else {
+        // Check budget
+        const currentSpent = state.marketSelected.reduce((sum, itemId) => {
+          return sum + marketItems.find(i => i.id === itemId).price;
+        }, 0);
+
+        if (currentSpent + item.price > 10000) {
+          alert("💸 용돈(10,000원)을 초과할 수 없어요! 더 꼭 필요한 것을 골라보세요.");
+          return;
+        }
+        state.marketSelected.push(id);
+      }
+
+      renderMarketItems();
+      updateMarketUI();
+    }
+
+    function updateMarketUI() {
+      const spent = state.marketSelected.reduce((sum, id) => {
+        return sum + marketItems.find(i => i.id === id).price;
+      }, 0);
+      const remaining = 10000 - spent;
+
+      document.getElementById('market-budget').innerText = `${remaining.toLocaleString()} 원`;
+
+      const basketSummary = document.getElementById('basket-summary');
+      if (state.marketSelected.length === 0) {
+        basketSummary.innerText = "아직 담은 물건이 없어요.";
+      } else {
+        const names = state.marketSelected.map(id => marketItems.find(i => i.id === id).name.split(' ')[1]).join(', ');
+        basketSummary.innerText = `담은 물건 (${state.marketSelected.length}개): ${names}`;
+      }
+    }
+
+    function evaluateMarket() {
+      if (state.marketSelected.length === 0) {
+        alert("장바구니에 최소 1개 이상의 물건을 담아주세요!");
+        return;
+      }
+
+      const selectedObjects = state.marketSelected.map(id => marketItems.find(i => i.id === id));
+      const needCount = selectedObjects.filter(i => i.type === 'need').length;
+      const totalNeedCount = marketItems.filter(i => i.type === 'need').length;
+
+      state.badges.market = true;
+
+      let evalMessage = "";
+      if (needCount === totalNeedCount) {
+        evalMessage = "👏 **완벽한 알뜰 소비자!** 생활에 꼭 필요한 물건을 우선적으로 고르고 예산도 현명하게 사용했어요!";
+      } else if (needCount >= 2) {
+        evalMessage = "👍 **훌륭해요!** 필요한 물건을 잘 살피며 합리적으로 소비하셨군요!";
+      } else {
+        evalMessage = "💡 **다음엔 더 잘할 수 있어요!** '원하는 것(Want)'보다 '필요한 것(Need)'을 먼저 구매하는 습관을 가져봐요!";
+      }
+
+      showResultScreen({
+        title: "알뜰 장보기 완료!",
+        emoji: "🛍️",
+        detail: evalMessage,
+        badgeName: "🛒 알뜰 소비왕 배지"
+      });
+    }
+
+    // -------------------------------------------------------------
+    // RESULT & CONFETTI REWARD
+    // -------------------------------------------------------------
+    function showResultScreen({ title, emoji, detail, badgeName }) {
+      showScreen('screen-result');
+      document.getElementById('result-title').innerText = title;
+      document.getElementById('result-emoji').innerText = emoji;
+      document.getElementById('result-detail').innerHTML = detail.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+      document.getElementById('result-badge-box').innerHTML = `
+        <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-2xl border-2 border-turtle-300 shadow-sm">
+          <span class="text-2xl">🏅</span>
+          <span class="font-jua text-turtle-900">${badgeName} 획득!</span>
+        </div>
+      `;
+
+      // Trigger Confetti
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    // Initial load
+    renderBadges();
+  </script>
+</body>
+</html>
